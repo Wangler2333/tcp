@@ -251,7 +251,7 @@ class Ui_TCP(QDialog):
             self.tcp_client_start()
             self.pushButton_unlink.setEnabled(True)
             self.pushButton_link.setEnabled(False)
-        if self.comboBox_tcp.currentIndex() == 0:
+        if self.comboBox_tcp.currentIndex() == 2:
             self.tcp_server_start()
             self.pushButton_unlink.setEnabled(True)
             self.pushButton_link.setEnabled(False)
@@ -315,11 +315,11 @@ class Ui_TCP(QDialog):
         self.tcp_server_socket.setblocking(False)
         try:
             self.port = int(self.textEdit_port.toPlainText())
+            self.tcp_server_socket.bind(('', self.port))
         except Exception as ret:
             self.msg = '请检查端口号\n'
             self._signal.emit("写入")
         else:
-            self.tcp_server_socket.bind(('', self.port))
             self.tcp_server_socket.listen()
             self.msg = 'TCP服务端正在监听端口:%s\n' % str(self.port)
             self._signal.emit("写入")
